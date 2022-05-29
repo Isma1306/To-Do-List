@@ -27,7 +27,10 @@ export class ApiClientService {
       url,
       { body: task }
     ).subscribe();
-
   }
+  toggleTask(task: Task): Observable<Task> {
+    return this.http.put<Task>(url, task);
+  }
+
 
 }

@@ -21,6 +21,13 @@ const destroyTask = async function (task) {
   return response;
 };
 
+const updateTask = async function (task) {
+  console.log('task :>> ', task);
+  const newTask = await Task.findOneAndUpdate(task._id, { new: true });
+  console.log('newTask :>> ', newTask);
+  return newTask;
+};
+
 module.exports = {
-  saveTask, findTasks, destroyTask
+  saveTask, findTasks, destroyTask, updateTask
 };

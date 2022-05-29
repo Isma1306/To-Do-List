@@ -15,9 +15,9 @@ export class TaskComponent implements OnInit {
   @Input() task?: Task;
   @Output() delete: EventEmitter<Task> = new EventEmitter();
 
-  public checked = false;
-  public status: string = '';
 
+  public status: string = '';
+  public decoration: string = 'none';
 
   constructor(private http: ApiClientService) { }
 
@@ -28,22 +28,30 @@ export class TaskComponent implements OnInit {
     }
   }
 
-
-  isChecked(checked: boolean) {
-    this.checked = checked;
-    if (checked) {
-      this.status = 'success';
-      return "line-through";
-    }
-    else {
-      this.status = '';
-      return "none";
+  strike(isDone: boolean) {
+    console.log('isDone :>> ', isDone);
+    if (isDone) {
+      this.decoration = "line-through";
+    } else {
+      this.decoration = "none";
     }
 
   }
 
+  isChecked(checked: any) {
+
+    if (this.task) {
+      this.task.isDone = !this.task.isDone;
+      this.http.toggleTask(this.task)
+        .subscribe((response: Task) => {
+          this.task = response;
+          this.strike(response.isDone);
+        });
+    }
+
+  }
 
   ngOnInit(): void {
-  }
+  };
 
 }

@@ -1,4 +1,4 @@
-const { findTasks, saveTask, destroyTask } = require('../models/task.model');
+const { findTasks, saveTask, destroyTask, updateTask } = require('../models/task.model');
 
 const sendTasks = async function (req, res) {
   try {
@@ -38,6 +38,18 @@ const deleteTask = async function (req, res) {
   }
 };
 
+const toggleTask = async function (req, res) {
+  try {
+    const response = await updateTask(req.body);
+    res.send(response);
+    res.status(201);
+  } catch (error) {
+    console.log(error);
+    res.status(400);
+    res.send(error);
+  }
+};
+
 
 
 const wrongPath = function (req, res) {
@@ -47,5 +59,5 @@ const wrongPath = function (req, res) {
 
 
 module.exports = {
-  postTask, sendTasks, deleteTask, wrongPath
+  postTask, sendTasks, deleteTask, toggleTask, wrongPath
 };
