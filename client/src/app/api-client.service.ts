@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Task } from './tasks';
 
@@ -19,8 +19,15 @@ export class ApiClientService {
 
   addTask(task: Task): Observable<Task> {
     const newTask = this.http.post<Task>(url, task);
-    console.log('response :>> ', newTask);
     return newTask;
+  }
+
+  deleteTask(task: Task): void {
+    this.http.delete<HttpEvent<Object>>(
+      url,
+      { body: task }
+    ).subscribe();
+
   }
 
 }

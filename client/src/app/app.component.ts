@@ -16,6 +16,10 @@ export class AppComponent {
 
   }
 
+  deleteTask(task: Task) {
+    this.tasks = this.tasks.filter(x => x !== task);
+  }
+
   ngOnInit(): void {
     this.http.getTasks().subscribe((tasks) => {
       this.tasks = tasks;

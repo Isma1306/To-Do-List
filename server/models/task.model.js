@@ -16,6 +16,11 @@ const findTasks = async function () {
   return task;
 };
 
+const destroyTask = async function (task) {
+  const response = await Task.deleteOne(task);
+  return response;
+};
+
 module.exports = {
-  saveTask, findTasks
+  saveTask, findTasks, destroyTask
 };

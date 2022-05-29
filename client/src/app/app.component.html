@@ -2,7 +2,7 @@
   <nb-layout-header>To Do list</nb-layout-header>
   <nb-layout-column>
     <h1 *ngIf="tasks.length === 0">Add a new task!</h1>
-    <app-task *ngFor="let task of tasks" [task]="task"></app-task>
+    <app-task *ngFor="let task of tasks" [task]="task" (delete)="deleteTask($event)"></app-task>
   </nb-layout-column>
   <nb-layout-footer fixed>
     <app-task-form [tasks]="tasks"></app-task-form>

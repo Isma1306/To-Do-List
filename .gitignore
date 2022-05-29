@@ -10,6 +10,10 @@
 /node_modules
 npm-debug.log
 yarn-error.log
+/server/node_modules
+/client/node_modules
+/client/.angular/
+/client/.vscode/
 
 # IDEs and editors
 .idea/
@@ -26,6 +30,7 @@ yarn-error.log
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+ client/.vscode/
 .history/*
 
 # Miscellaneous
@@ -40,4 +45,3 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
-/server/node_modules
