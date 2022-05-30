@@ -22,9 +22,7 @@ const destroyTask = async function (task) {
 };
 
 const updateTask = async function (task) {
-  console.log('task :>> ', task);
-  const newTask = await Task.findOneAndUpdate(task._id, { new: true });
-  console.log('newTask :>> ', newTask);
+  const newTask = await Task.replaceOne({ _id: task._id }, task);
   return newTask;
 };
 

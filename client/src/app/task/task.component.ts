@@ -12,7 +12,7 @@ import { Task } from '../tasks';
 })
 export class TaskComponent implements OnInit {
 
-  @Input() task?: Task;
+  @Input() taskItem?: Task;
   @Output() delete: EventEmitter<Task> = new EventEmitter();
 
 
@@ -22,14 +22,13 @@ export class TaskComponent implements OnInit {
   constructor(private http: ApiClientService) { }
 
   deleteMe() {
-    if (this.task) {
-      this.http.deleteTask(this.task);
-      this.delete.emit(this.task);
+    if (this.taskItem) {
+      this.http.deleteTask(this.taskItem);
+      this.delete.emit(this.taskItem);
     }
   }
 
   strike(isDone: boolean) {
-    console.log('isDone :>> ', isDone);
     if (isDone) {
       this.decoration = "line-through";
     } else {
@@ -38,20 +37,18 @@ export class TaskComponent implements OnInit {
 
   }
 
-  isChecked(checked: any) {
-
-    if (this.task) {
-      this.task.isDone = !this.task.isDone;
-      this.http.toggleTask(this.task)
-        .subscribe((response: Task) => {
-          this.task = response;
-          this.strike(response.isDone);
-        });
+  isChecked(event: boolean) {
+    if (this.taskItem) {
+      this.taskItem.isDone = event;
+      this.strike(event);
+      this.http.toggleTask(this.taskItem)
+        .subscribe();
     }
 
   }
 
   ngOnInit(): void {
+    if (this.taskItem) this.strike(this.taskItem?.isDone);
   };
 
 }
