@@ -6,7 +6,7 @@ const { router } = require('./router');
 
 const PORT = 3003;
 const app = new Express();
-
+app.use(Express.static('public'));
 app.use(cors());
 app.use(Express.json());
 app.use(router);
