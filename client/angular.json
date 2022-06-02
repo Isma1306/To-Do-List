@@ -25,6 +25,7 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
+              "src/service-worker.js",
               "src/manifest.webmanifest"
             ],
             "styles": [
