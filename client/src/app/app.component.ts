@@ -17,7 +17,7 @@ export class AppComponent {
   }
 
   deleteTask(task: Task) {
-    this.tasks = this.tasks.filter(x => x !== task);
+    this.tasks = this.tasks.filter(x => x._id !== task._id);
   }
 
   ngOnInit(): void {

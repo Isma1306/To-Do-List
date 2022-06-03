@@ -35,8 +35,9 @@ export class ApiClientService {
 
   deleteTask = async function (task: Task) {
     if (task._id) {
-      return (await db).delete('taskStore', task._id);
+      (await db).delete('taskStore', task._id);
     }
+    return task;
   };
 
 

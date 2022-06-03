@@ -23,8 +23,10 @@ export class TaskComponent implements OnInit {
 
   deleteMe() {
     if (this.taskItem) {
-      this.db.deleteTask(this.taskItem).then(() => this.delete.emit(this.taskItem));
-
+      this.db.deleteTask(this.taskItem).then((oldTask) => {
+        this.delete.emit(oldTask);
+      }
+      );
     }
   }
 
