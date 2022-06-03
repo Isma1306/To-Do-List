@@ -23,8 +23,8 @@ export class TaskComponent implements OnInit {
 
   deleteMe() {
     if (this.taskItem) {
-      this.db.deleteTask(this.taskItem);
-      this.delete.emit(this.taskItem);
+      this.db.deleteTask(this.taskItem).then(() => this.delete.emit(this.taskItem));
+
     }
   }
 
@@ -37,14 +37,16 @@ export class TaskComponent implements OnInit {
 
   }
 
-  isChecked(event: boolean) {
+  isChecked() {
     if (this.taskItem) {
-      this.taskItem.isDone = event;
-      this.strike(event);
-      this.db.toggleTask(this.taskItem);
+      const newTask = Object.assign({}, this.taskItem);
+      newTask.isDone = !this.taskItem.isDone;
+      this.db.toggleTask(newTask).then((task) => {
+        this.taskItem = task;
+        this.strike(task.isDone);
 
+      });
     }
-
   }
 
   ngOnInit(): void {

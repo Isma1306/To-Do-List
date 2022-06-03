@@ -1,8 +1,8 @@
 <nb-card [status]='status'>
   <nb-card-body>
-    <nb-checkbox (checkedChange)="isChecked($event)">
+    <div (click)="isChecked()">
       <h4 [ngStyle]="{'text-decoration':decoration}">{{taskItem?.content}}</h4>
-    </nb-checkbox>
+    </div>
     <button size="small" nbButton status="danger" (click)="deleteMe()">X</button>
   </nb-card-body>
 </nb-card>

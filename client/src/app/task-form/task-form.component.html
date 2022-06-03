@@ -1,5 +1,5 @@
 <form [formGroup]="inputForm" (ngSubmit)="handleSubmit(inputForm?.value)">
-  <input formControlName="content" type="text" name="content" id="content" nbInput fullWidth status="success"
-    fieldSize="large" placeholder="Enter a new Task!">
+  <input formControlName="content" type="text" name="content" id="content" nbInput fullWidth [status]="status"
+    fieldSize="large" placeholder="Enter a new Task!" required>
   <button size="large" nbButton status="success">Add</button>
 </form>

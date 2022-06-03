@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ApiClientService } from '../api-client.service';
 import { Task } from '../tasks';
 @Component({
@@ -9,8 +9,10 @@ import { Task } from '../tasks';
 })
 export class TaskFormComponent implements OnInit {
 
+  public status: string = 'success';
+
   public inputForm: FormGroup = new FormGroup({
-    content: new FormControl(''),
+    content: new FormControl('', Validators.required)
   });
 
 
@@ -25,10 +27,16 @@ export class TaskFormComponent implements OnInit {
   }
 
   handleSubmit(input: Task): void {
-    this.db.addTask(input)
-      .then(() => {
-        this.tasks.push(input);
-      });
+    if (this.inputForm.get('content')?.invalid) {
+      this.status = 'warning';
+    } else if (input.content) {
+      this.db.addTask(input)
+        .then((id: string) => {
+          this.status = 'success';
+          input._id = id;
+          this.tasks.push(input);
+          this.inputForm.reset();
+        });
+    }
   }
-
 }

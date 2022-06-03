@@ -3,9 +3,6 @@ import { Task, MyDB } from './tasks';
 import { openDB } from 'idb';
 
 
-
-
-
 const db = openDB<MyDB>('my-db', 1, {
   upgrade(db) {
     const store = db.createObjectStore('taskStore',
@@ -16,9 +13,6 @@ const db = openDB<MyDB>('my-db', 1, {
 
   },
 });
-
-
-
 
 
 @Injectable({
@@ -34,8 +28,9 @@ export class ApiClientService {
   };
 
   addTask = async function (task: Task) {
-    const response = (await db).add('taskStore', task);
-    return response;
+    task.isDone = false;
+    const id = (await db).add('taskStore', task);
+    return id;
   };
 
   deleteTask = async function (task: Task) {
@@ -44,7 +39,9 @@ export class ApiClientService {
     }
   };
 
+
   toggleTask = async function (task: Task) {
-    return (await db).put('taskStore', task);
+    (await db).put('taskStore', task);
+    return task;
   };
 }
