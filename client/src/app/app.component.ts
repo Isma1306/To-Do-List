@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-
 import { Task } from './tasks';
 import { ApiClientService } from './api-client.service';
 
@@ -12,7 +11,8 @@ import { ApiClientService } from './api-client.service';
 export class AppComponent {
   title = 'To Do List';
   public tasks: Task[] = [];
-  constructor(private http: ApiClientService) {
+
+  constructor(private db: ApiClientService) {
 
   }
 
@@ -21,7 +21,7 @@ export class AppComponent {
   }
 
   ngOnInit(): void {
-    this.http.getTasks().subscribe((tasks) => {
+    this.db.getAll().then((tasks) => {
       this.tasks = tasks;
     });
   }

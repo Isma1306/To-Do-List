@@ -18,16 +18,16 @@ export class TaskFormComponent implements OnInit {
   tasks!: Task[];
 
 
-  constructor(private http: ApiClientService) { }
+  constructor(private db: ApiClientService) { }
 
   ngOnInit(): void {
 
   }
 
   handleSubmit(input: Task): void {
-    this.http.addTask(input)
-      .subscribe((task: Task) => {
-        this.tasks.push(task);
+    this.db.addTask(input)
+      .then(() => {
+        this.tasks.push(input);
       });
   }
 

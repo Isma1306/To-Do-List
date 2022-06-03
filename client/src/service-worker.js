@@ -7,3 +7,7 @@ self.addEventListener('notificationclick', (event) => {
 self.addEventListener('message', (event) => {
   console.log('message picked up by custom service worker code', event);
 });
+
+self.addEventListener("fetch", event => {
+  console.log('WORKER: Fetching', event.request);
+});

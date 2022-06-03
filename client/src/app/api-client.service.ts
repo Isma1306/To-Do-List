@@ -1,36 +1,50 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpEvent } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Task } from './tasks';
+import { Task, MyDB } from './tasks';
+import { openDB } from 'idb';
 
-const url = 'http://localhost:3003/tasks';
+
+
+
+
+const db = openDB<MyDB>('my-db', 1, {
+  upgrade(db) {
+    const store = db.createObjectStore('taskStore',
+      {
+        keyPath: '_id',
+        autoIncrement: true
+      });
+
+  },
+});
+
+
+
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiClientService {
 
-  constructor(private http: HttpClient) { }
+  constructor() { }
 
-  getTasks(): Observable<Task[]> {
-    const tasks = this.http.get<Task[]>(url);
-    return tasks;
-  }
+  getAll = async function () {
+    const value = (await db).getAll('taskStore');
+    return value;
+  };
 
-  addTask(task: Task): Observable<Task> {
-    const newTask = this.http.post<Task>(url, task);
-    return newTask;
-  }
+  addTask = async function (task: Task) {
+    const response = (await db).add('taskStore', task);
+    return response;
+  };
 
-  deleteTask(task: Task): void {
-    this.http.delete<HttpEvent<Object>>(
-      url,
-      { body: task }
-    ).subscribe();
-  }
-  toggleTask(task: Task): Observable<Task> {
-    return this.http.put<Task>(url, task);
-  }
+  deleteTask = async function (task: Task) {
+    if (task._id) {
+      return (await db).delete('taskStore', task._id);
+    }
+  };
 
-
+  toggleTask = async function (task: Task) {
+    return (await db).put('taskStore', task);
+  };
 }

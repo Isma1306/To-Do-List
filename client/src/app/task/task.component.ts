@@ -19,11 +19,11 @@ export class TaskComponent implements OnInit {
   public status: string = '';
   public decoration: string = 'none';
 
-  constructor(private http: ApiClientService) { }
+  constructor(private db: ApiClientService) { }
 
   deleteMe() {
     if (this.taskItem) {
-      this.http.deleteTask(this.taskItem);
+      this.db.deleteTask(this.taskItem);
       this.delete.emit(this.taskItem);
     }
   }
@@ -41,14 +41,14 @@ export class TaskComponent implements OnInit {
     if (this.taskItem) {
       this.taskItem.isDone = event;
       this.strike(event);
-      this.http.toggleTask(this.taskItem)
-        .subscribe();
+      this.db.toggleTask(this.taskItem);
+
     }
 
   }
 
   ngOnInit(): void {
-    if (this.taskItem) this.strike(this.taskItem?.isDone);
+    if (this.taskItem) this.strike(this.taskItem.isDone);
   };
 
 }
