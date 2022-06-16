@@ -25,6 +25,11 @@
       "name": "assets",
       "installMode": "lazy",
       "updateMode": "prefetch",
+      "cacheConfig": {
+        "strategy": "performance",
+        "maxSize": 100,
+        "maxAge": "3d"
+      },
       "cacheQueryOptions": {
         "ignoreVary": true
       },
